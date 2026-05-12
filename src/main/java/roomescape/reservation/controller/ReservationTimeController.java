@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class ReservationTimeController {
     public ResponseEntity<ReservationTimeResponse> createTime(@RequestBody @Valid ReservationTimeRequest request) {
         final ReservationTime reservationTime = reservationTimeService.createTime(request.startAt());
 
-        return ResponseEntity.created(URI.create("/times/" + reservationTime.getId()))
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ReservationTimeResponse.from(reservationTime));
     }
 
