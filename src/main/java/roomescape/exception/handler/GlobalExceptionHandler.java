@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import roomescape.exception.RoomEscapeErrorCodeHttpStatusMapper;
+import roomescape.exception.RoomEscapeException;
 import roomescape.exception.code.ErrorCode;
 import roomescape.exception.dto.ErrorResponse;
 
@@ -22,6 +24,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .internalServerError()
                 .body(ErrorResponse.of(ErrorCode.UNKNOWN_SERVER_ERROR));
+    }
+
+    @ExceptionHandler(RoomEscapeException.class)
+    public ResponseEntity<ErrorResponse> handleRoomEscapeException(RoomEscapeException e) {
+        return ResponseEntity
+                .status(RoomEscapeErrorCodeHttpStatusMapper.getHttpStatus(e.getErrorCode()))
+                .body(ErrorResponse.of(e.getErrorCode()));
     }
 
     @Override
