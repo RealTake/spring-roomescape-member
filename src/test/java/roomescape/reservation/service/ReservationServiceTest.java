@@ -142,14 +142,14 @@ class ReservationServiceTest {
 
     @DisplayName("사용자는 본인 예약의 날짜와 시간을 변경할 수 있다.")
     @Test
-    void changeMyReservationDateTime() {
+    void changeReservationDateTime() {
         Reservation reservation = reservationService.getMyReservations("김철수").stream()
                 .filter(it -> it.getDate().isEqual(LocalDate.now().plusDays(7)))
                 .findFirst()
                 .orElseThrow();
         LocalDate changeDate = LocalDate.now().plusDays(8);
 
-        Reservation changedReservation = reservationService.changeMyReservationDateTime(
+        Reservation changedReservation = reservationService.changeReservationDateTime(
                 reservation.getId(),
                 "김철수",
                 changeDate,
@@ -164,13 +164,13 @@ class ReservationServiceTest {
 
     @DisplayName("사용자는 다른 사람 예약의 날짜와 시간을 변경할 수 없다.")
     @Test
-    void changeMyReservationDateTimeFailByOtherUser() {
+    void changeReservationDateTimeFailByOtherUser() {
         Reservation reservation = reservationService.getMyReservations("김철수").stream()
                 .filter(it -> it.getDate().isEqual(LocalDate.now().plusDays(7)))
                 .findFirst()
                 .orElseThrow();
 
-        assertThatThrownBy(() -> reservationService.changeMyReservationDateTime(
+        assertThatThrownBy(() -> reservationService.changeReservationDateTime(
                 reservation.getId(),
                 "이영희",
                 LocalDate.now().plusDays(8),
@@ -181,13 +181,13 @@ class ReservationServiceTest {
 
     @DisplayName("사용자는 이미 예약된 날짜와 시간으로 변경할 수 없다.")
     @Test
-    void changeMyReservationDateTimeFailByDuplicate() {
+    void changeReservationDateTimeFailByDuplicate() {
         Reservation reservation = reservationService.getMyReservations("김철수").stream()
                 .filter(it -> it.getDate().isEqual(LocalDate.now().plusDays(7)))
                 .findFirst()
                 .orElseThrow();
 
-        assertThatThrownBy(() -> reservationService.changeMyReservationDateTime(
+        assertThatThrownBy(() -> reservationService.changeReservationDateTime(
                 reservation.getId(),
                 "김철수",
                 LocalDate.now().plusDays(6),
@@ -198,13 +198,13 @@ class ReservationServiceTest {
 
     @DisplayName("사용자는 날짜와 시간이 변경되지 않은 예약 변경 요청을 할 수 없다.")
     @Test
-    void changeMyReservationDateTimeFailByNotChanged() {
+    void changeReservationDateTimeFailByNotChanged() {
         Reservation reservation = reservationService.getMyReservations("김철수").stream()
                 .filter(it -> it.getDate().isEqual(LocalDate.now().plusDays(7)))
                 .findFirst()
                 .orElseThrow();
 
-        assertThatThrownBy(() -> reservationService.changeMyReservationDateTime(
+        assertThatThrownBy(() -> reservationService.changeReservationDateTime(
                 reservation.getId(),
                 "김철수",
                 reservation.getDate(),

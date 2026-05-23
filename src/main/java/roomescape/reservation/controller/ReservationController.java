@@ -53,7 +53,7 @@ public class ReservationController {
             @SessionAttribute(SESSION_KEY) LoginUser loginUser,
             @RequestBody @Valid ReservationDateTimeChangeRequest request
     ) {
-        Reservation reservation = reservationService.changeMyReservationDateTime(
+        Reservation reservation = reservationService.changeReservationDateTime(
                 id,
                 loginUser.name(),
                 request.date(),

@@ -62,7 +62,7 @@ public class ReservationService {
         reservationRepository.delete(id);
     }
 
-    public Reservation changeMyReservationDateTime(
+    public Reservation changeReservationDateTime(
             long id,
             String username,
             LocalDate date,
