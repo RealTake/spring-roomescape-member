@@ -68,12 +68,6 @@ public class ReservationTimeRepository {
     }
 
     private ReservationTime insert(ReservationTime reservationTime) {
-        if (reservationTime.getId() != null) {
-            final String sql = "INSERT INTO reservation_time (id, start_at) VALUES (?, ?)";
-            jdbcTemplate.update(sql, reservationTime.getId(), reservationTime.getStartAt());
-            return reservationTime;
-        }
-
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {

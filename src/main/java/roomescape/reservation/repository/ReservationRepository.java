@@ -79,19 +79,6 @@ public class ReservationRepository {
     }
 
     private Reservation insert(Reservation reservation) {
-        if (reservation.getId() != null) {
-            final String sql = "INSERT INTO reservation (id, name, date, time_id, theme_id) VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(
-                    sql,
-                    reservation.getId(),
-                    reservation.getName(),
-                    reservation.getDate(),
-                    reservation.getTime().getId(),
-                    reservation.getTheme().getId()
-            );
-            return reservation;
-        }
-
         final GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {

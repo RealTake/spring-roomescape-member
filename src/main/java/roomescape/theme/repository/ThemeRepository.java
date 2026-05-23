@@ -89,12 +89,6 @@ public class ThemeRepository {
     }
 
     private Theme insert(Theme theme) {
-        if (theme.getId() != null) {
-            final String sql = "INSERT INTO theme (id, name, description, thumbnail_url) VALUES (?, ?, ?, ?)";
-            jdbcTemplate.update(sql, theme.getId(), theme.getName(), theme.getDescription(), theme.getThumbnailUrl());
-            return theme;
-        }
-
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
